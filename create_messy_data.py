@@ -1,6 +1,7 @@
 import random
 import csv
 from datetime import datetime, timedelta
+import json
 
 random.seed(42)
 
@@ -64,10 +65,8 @@ for pid in product_ids:
         "stock": random.randint(0, 500)
     })
 
-with open("outputs/products_ref.csv", "w", newline="", encoding="utf-8") as f:
-    w = csv.DictWriter(f, fieldnames=["product_id","product_name","category","stock"])
-    w.writeheader()
-    w.writerows(products)
+with open("outputs/products_ref.json", "w", newline="", encoding="utf-8") as f:
+    json.dump(products, f, indent=2, ensure_ascii=False)
 
 # ── main orders table ─────────────────────────────────────────────────────────
 statuses_dirty = [
@@ -124,7 +123,7 @@ with open("outputs/orders_raw.csv", "w", newline="", encoding="utf-8") as f:
     w.writerows(rows)
 
 print(f"orders_raw.csv  → {len(rows)} rows")
-print(f"products_ref.csv → {len(products)} rows")
+print(f"products_ref.json → {len(products)} rows")
 
 # Quick sanity check
 nulls = sum(1 for r in rows if r["customer_info"] is None)
