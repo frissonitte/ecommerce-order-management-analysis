@@ -2,6 +2,7 @@ import random
 import csv
 from datetime import datetime, timedelta
 import json
+import os
 
 random.seed(42)
 
@@ -64,6 +65,8 @@ for pid in product_ids:
         "category": random.choice(categories_clean),
         "stock": random.randint(0, 500)
     })
+
+os.makedirs("outputs", exist_ok=True)
 
 with open("outputs/products_ref.json", "w", newline="", encoding="utf-8") as f:
     json.dump(products, f, indent=2, ensure_ascii=False)
